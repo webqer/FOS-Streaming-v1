@@ -1,11 +1,11 @@
-#!/bin/bash
+curl "http://172.16.1.201:7777/install_database_tables.php?install"#!/bin/bash
 
-# FUNCTION: Ubuntu 14.04 Check
+# FUNCTION: Ubuntu 16.04 Check
 distro(){
 if [ -f /etc/lsb-release ]; then
     . /etc/lsb-release
         if [ $DISTRIB_ID == Ubuntu ]; then
-            if [ $DISTRIB_RELEASE != "14.04" ]; then
+            if [ $DISTRIB_RELEASE != "16.04" ]; then
                 error
             fi
         else
@@ -39,7 +39,7 @@ fosstreamingexist() {
 packages_install(){
     apt-get update >/dev/null 2>&1
     apt-get install -y --force-yes git >/dev/null 2>&1
-    apt-get install -y --force-yes php5-cli curl >/dev/null 2>&1
+    apt-get install -y --force-yes php5.6-cli curl >/dev/null 2>&1
     apt-get install -y --force-yes libxml2-dev  > /dev/null 2>&1
     apt-get install -y --force-yes libbz2-dev  > /dev/null 2>&1
     apt-get install -y --force-yes libcurl4-openssl-dev   > /dev/null 2>&1
@@ -53,7 +53,7 @@ packages_install(){
     apt-get install -y --force-yes libxslt1-dev git > /dev/null 2>&1
     apt-get install -y --force-yes libssl-dev > /dev/null 2>&1
     apt-get install -y --force-yes git > /dev/null 2>&1
-    apt-get install -y --force-yes php5  > /dev/null 2>&1
+    apt-get install -y --force-yes php5.6  > /dev/null 2>&1
     apt-get install -y --force-yes unzip > /dev/null 2>&1
     apt-get install -y --force-yes python-software-properties > /dev/null 2>&1
     apt-get install -y --force-yes libpopt0 > /dev/null 2>&1
@@ -149,7 +149,7 @@ packages_install(){
     apt-get install -y --force-yes libjpeg8 > /dev/null 2>&1
     apt-get install -y --force-yes xtrans-dev > /dev/null 2>&1
     apt-get install -y --force-yes zlib1g-dev > /dev/null 2>&1
-    apt-get install -y --force-yes php5-fpm  > /dev/null 2>&1
+    apt-get install -y --force-yes php5.6-fpm  > /dev/null 2>&1
     apt-get install -y --force-yes libgtk2.0-0 libgdk-pixbuf2.0-0 libfontconfig1 libxrender1 libx11-6 libglib2.0-0  libxft2 libfreetype6 libc6 zlib1g libpng12-0 libstdc++6-4.8-dbg-arm64-cross libgcc1  > /dev/null 2>&1
     }
     ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so.6.11.1 /usr/lib/libfreetype.so.6
@@ -197,8 +197,8 @@ startfos(){
 
 ffmpeg()
 {
-    wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O /home/fos-streaming/ffmpeg-release-64bit-static.tar.xz  > /dev/null 2>&1
-    tar -xJf /home/fos-streaming/ffmpeg-release-64bit-static.tar.xz -C /tmp/ > /dev/null 2>&1
+    wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -O /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz  > /dev/null 2>&1
+    tar -xJf /home/fos-streaming/ffmpeg-release-amd64-static.tar.xz -C /tmp/ > /dev/null 2>&1
     /bin/cp /tmp/ffmpeg*/ffmpeg  /usr/local/bin/ffmpeg
     /bin/cp /tmp/ffmpeg*/ffprobe /usr/local/bin/ffprobe
     chmod 755 /usr/local/bin/ffmpeg  > /dev/null 2>&1
@@ -248,7 +248,7 @@ echo "phpmyadmin phpmyadmin/mysql/app-pass password $sqlpasswd" | debconf-set-se
 echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
 
 apt-get install -y mysql-server > /dev/null 2>&1
-apt-get install -y php5-mysql  > /dev/null 2>&1
+apt-get install -y php5.6-mysql  > /dev/null 2>&1
 
 mysql -uroot -p$sqlpasswd -e "CREATE DATABASE $sqldatabase"
 mysql -uroot -p$sqlpasswd -e "grant all privileges on $sqldatabase.* to '$sqluname'@'localhost' identified by '$sqlpasswd'"
@@ -272,4 +272,3 @@ startfos
 #test
 foswebport-streamport
 info
-
