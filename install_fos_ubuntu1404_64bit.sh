@@ -1,4 +1,4 @@
-curl "http://172.16.1.201:7777/install_database_tables.php?install"#!/bin/bash
+#!/bin/bash
 
 # FUNCTION: Ubuntu 16.04 Check
 distro(){
