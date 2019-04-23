@@ -1,3 +1,40 @@
+#!/bin/bash
+
+# FUNCTION: Ubuntu 16.04 Check
+distro(){
+if [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+        if [ $DISTRIB_ID == Ubuntu ]; then
+            if [ $DISTRIB_RELEASE != "16.04" ]; then
+                error
+            fi
+        else
+            error
+        fi
+fi
+}
+
+# FUNCTION: ERROR
+error(){
+    sleep 2
+    echo -ne '\n'"--PROBLEM!--"
+    echo -ne '\n'"Support: https://github.com/zgelici/FOS-Streaming-v1" '\n'
+exit
+}
+
+
+# FUNCTION: FOS-Streaming Exist
+fosstreamingexist() {
+    if [ -d "/home/fos-streaming" ]; then
+      echo -ne '\n'"You have already installed fos streaming before?"
+      echo "If you want remove fos-streaming"
+      echo "killall -9 nginx php-fpm"
+      echo  "userdel fosstreaming"
+      echo "rm -r /home/fos-streaming"
+      exit
+    fi
+}
+
 # FUNCTION: Packages Install
 packages_install(){
     apt-get update >/dev/null 2>&1
